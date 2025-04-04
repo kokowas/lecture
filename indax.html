@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Synced Text Highlighter</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .sentence { font-size: 24px; line-height: 1.8; max-width: 800px; margin: auto; text-align: left; }
+        .highlight { background-color: #00ff84; }
+        .controls button { 
+            padding: 15px 30px; 
+            font-size: 20px; 
+            cursor: pointer; 
+            border: none; 
+            background: #007BFF; 
+            color: white; 
+            border-radius: 10px; 
+        }
+		.logo {
+            width: 150px; /* Ajustez la taille du logo selon vos besoins */
+            margin-bottom: 20px;
+        }
+        .gif {
+            width: 200px; /* Ajustez la taille de la GIF selon vos besoins */
+            margin-top: 20px;
+		}	
+    </style>
+</head>
+<body>
+
+ <header>
+        <img src="assets/images/logo.png" alt="Logo" style="width:200px;">
+    </header>
+	    <!-- Main Content -->
+    
+        <h1>Welcome to My Site!</h1>
+        
+        <!-- Animated Image (Reader GIF) -->
+        <div>
+            <img src="assets/images/reader.gif" alt="Reader GIF" style="width:300px;">
+        </div>
+
+        <!-- Audio Player -->
+        <div>
+            <audio controls>
+                <source src="assets/audio/la%20gazelle.wav" type="audio/wav">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    
+    
+    <div class="controls">
+        <button id="playPauseButton" onclick="toggleAudio()">▶️</button>
+    </div>
+
+<p id="sentence" class="sentence">
+    <span data-time="0.0">La</span> <span data-time="0.22">gazelle.</span>
+    <br><br>
+    <span data-time="1.86">Kaddour</span> <span data-time="2.28">regarde</span> <span data-time="2.86">la</span> <span data-time="3.3">gazelle.</span>
+    <span data-time="4.58">Elle</span> <span data-time="4.74">est</span> <span data-time="4.84">là,</span> <span data-time="5.52">debout</span> <span data-time="5.84">devant</span> <span data-time="6.1">le</span> <span data-time="6.32">ruisseau,</span> 
+    <span data-time="7.36">superbe</span> <span data-time="8.0">et</span> <span data-time="8.26">vivante.</span>
+    
+    <span data-time="9.58">Elle</span> <span data-time="9.78">allonge</span> <span data-time="10.3">lentement</span> <span data-time="10.96">le</span> <span data-time="11.18">cou</span> <span data-time="11.42">et</span> 
+    <span data-time="12.04">son</span> <span data-time="12.28">petit</span> <span data-time="12.78">museau</span> <span data-time="13.38">reçoit</span> <span data-time="14.08">quelques</span> 
+    <span data-time="14.6">gouttes</span> <span data-time="15.0">d</span> <span data-time="15.24">'eau</span> <span data-time="15.28">fraîche.</span>
+    
+    <span data-time="16.5">Elle</span> <span data-time="16.66">se</span> <span data-time="16.9">mouille</span> <span data-time="17.22">le</span> <span data-time="17.42">museau,</span> <span data-time="18.28">le</span> 
+    <span data-time="18.34">front,</span> <span data-time="19.12">le</span> <span data-time="19.26">poitrail</span> <span data-time="19.8">et</span> <span data-time="20.4">bientôt</span> 
+    <span data-time="20.88">toutes</span> <span data-time="21.48">les</span> <span data-time="21.74">pattes.</span>
+    
+    <span data-time="22.62">Puis</span> <span data-time="22.9">la</span> <span data-time="23.44">bête</span> <span data-time="23.84">regarde</span> <span data-time="24.44">fixement</span> <span data-time="25.2">Kaddour.</span>
+    
+    <span data-time="26.38">Elle</span> <span data-time="26.64">commence</span> <span data-time="27.04">à</span> <span data-time="27.32">s</span> <span data-time="27.58">'agiter.</span>
+    
+    <span data-time="28.52">Ses</span> <span data-time="28.82">pattes</span> <span data-time="28.9">tremblent.</span>
+    
+    <span data-time="30.44">Elle</span> <span data-time="30.68">frissonne.</span>
+   
+    <span data-time="32.12">Enfin,</span> <span data-time="32.9">il</span> <span data-time="33.16">caresse</span> <span data-time="33.66">la</span> <span data-time="33.9">gazelle.</span>
+    
+    <span data-time="34.86">Elle</span> <span data-time="34.96">n</span> <span data-time="35.1">'a</span> <span data-time="35.14">plus</span> <span data-time="35.4">peur</span> <span data-time="35.64">de</span> <span data-time="35.82">lui.</span>
+    
+    <span data-time="36.68">Elle</span> <span data-time="36.84">est</span> <span data-time="36.98">encore</span> <span data-time="37.44">toute</span> <span data-time="37.76">mouillée.</span>
+    
+    <span data-time="38.88">C</span> <span data-time="38.88">'est</span> <span data-time="38.98">une</span> <span data-time="39.2">bête</span> <span data-time="39.64">fragile.</span>
+</p>
+
+
+
+<script>
+    const audio = document.getElementById("audioPlayer");
+    const playPauseButton = document.getElementById("playPauseButton");
+    const words = document.querySelectorAll("#sentence span");
+    let isPaused = false;
+
+    function toggleAudio() {
+        if (audio.paused || audio.ended) {
+            if (audio.ended) audio.currentTime = 0;
+            audio.play();
+            isPaused = false;
+            playPauseButton.textContent = "⏸️";
+        } else {
+            audio.pause();
+            isPaused = true;
+            playPauseButton.textContent = "▶️";
+        }
+    }
+
+    function highlightWords() {
+        audio.ontimeupdate = () => {
+            if (isPaused) return;
+            
+            const currentTime = audio.currentTime;
+            words.forEach(word => {
+                let wordTime = parseFloat(word.dataset.time);
+                word.classList.remove("highlight");
+                if (currentTime >= wordTime && currentTime < wordTime + 0.5) {
+                    word.classList.add("highlight");
+                }
+            });
+
+            if (audio.ended) {
+                playPauseButton.textContent = "🔄";
+            }
+        };
+    }
+
+    words.forEach(word => {
+        word.addEventListener("click", function() {
+            let startTime = parseFloat(this.dataset.time);
+            audio.currentTime = startTime;
+            audio.play();
+            isPaused = false;
+            playPauseButton.textContent = "⏸️";
+            highlightWords();
+        });
+    });
+
+    audio.addEventListener("play", highlightWords);
+</script>
+</body>
+</html>
